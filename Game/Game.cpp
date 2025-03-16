@@ -593,14 +593,14 @@ void Game::meet(std::vector<std::string> args) {
         target_name += " " + args[i];
     }
 
-    std::string tmp = target_name;
+    std::string tmp = target_name; // this is to output what they typed if the npc is not found
 
     std::transform(target_name.begin(), target_name.end(), target_name.begin(), ::tolower);
 
     const std::vector<NPC>& room_npcs = current_location->get_NPCs();
 
     // search for npc name in room_npcs
-    std::vector<NPC>::const_iterator npc_it = std::find_if(room_npcs.begin(), room_npcs.end(), [target_name](const NPC& npc) {
+    std::vector<NPC>::const_iterator npc_it = std::find_if(room_npcs.begin(), room_npcs.end(), [&target_name](const NPC& npc) {
         std::string npc_name = npc.get_Name();
         std::transform(npc_name.begin(), npc_name.end(), npc_name.begin(), ::tolower);
         return npc_name.find(target_name) != std::string::npos;
@@ -642,21 +642,6 @@ void Game::go(std::vector<std::string> args) {
     }
 }
 
-// shows all items in inventory and total weight
-void Game::show_items(std::vector<std::string>) {
-    if (inventory.empty()) {
-        std::cout << "You are not carrying any items.\n";
-        return;
-    }
-
-    std::cout << "You are carrying the following items:\n";
-    for (Item& item : inventory) {
-        std::cout << "- " << item << "\n";
-    }
-
-    std::cout << "\nCurrent weight carried: " << current_weight << " lbs\n";
-}
-
 // picks up item from location
 void Game::take(std::vector<std::string> args) {
     if (args.empty()) {
@@ -677,7 +662,7 @@ void Game::take(std::vector<std::string> args) {
     std::vector<Item>& room_items = current_location->get_Items();
 
     // search for item name in room_items
-    std::vector<Item>::const_iterator item_it = std::find_if(room_items.begin(), room_items.end(), [target_item](const Item& item) {
+    std::vector<Item>::const_iterator item_it = std::find_if(room_items.begin(), room_items.end(), [&target_item](const Item& item) {
         std::string item_name;
         item_name = item.get_Name();
         std::transform(item_name.begin(), item_name.end(), item_name.begin(), ::tolower);
@@ -791,7 +776,7 @@ void Game::talk(std::vector<std::string> args) {
     std::vector<NPC>& room_npcs = current_location->get_NPCs();
 
     // search for npc name in room_npcs
-    std::vector<NPC>::iterator npc_it = std::find_if(room_npcs.begin(), room_npcs.end(), [target_name](NPC& npc) {
+    std::vector<NPC>::iterator npc_it = std::find_if(room_npcs.begin(), room_npcs.end(), [&target_name](NPC& npc) {
         std::string npc_name = npc.get_Name();
         std::transform(npc_name.begin(), npc_name.end(), npc_name.begin(), ::tolower);
         return npc_name.find(target_name) != std::string::npos;
@@ -802,16 +787,6 @@ void Game::talk(std::vector<std::string> args) {
     } else {
         std::cout << "There is no one named " << tmp << " here to talk to.\n";
     }
-}
-
-// examines the current environment
-void Game::look(std::vector<std::string>) {
-    std::cout << "Current Location: " << *current_location;
-}
-
-// shows current objective
-void Game::quest(std::vector<std::string>) {
-    std::cout << "Objective: Feed Eryndor enough calories to restore his strength\n";
 }
 
 // teleports player to location
@@ -832,7 +807,7 @@ void Game::teleport(std::vector<std::string> args) {
     std::transform(target_location.begin(), target_location.end(), target_location.begin(), ::tolower);
 
     // search for location name in room_npcs
-    std::vector<Location*>::const_iterator location_it = std::find_if(locations.begin(), locations.end(), [target_location](Location* location) {
+    std::vector<Location*>::const_iterator location_it = std::find_if(locations.begin(), locations.end(), [&target_location](Location* location) {
             std::string location_name = location->get_Name();
             std::transform(location_name.begin(), location_name.end(), location_name.begin(), ::tolower);
             return location_name == target_location;
@@ -847,6 +822,31 @@ void Game::teleport(std::vector<std::string> args) {
     } else {
         std::cout << "Location not found: " << tmp << "\n";
     }
+}
+
+// shows all items in inventory and total weight
+void Game::show_items(std::vector<std::string>) {
+    if (inventory.empty()) {
+        std::cout << "You are not carrying any items.\n";
+        return;
+    }
+
+    std::cout << "You are carrying the following items:\n";
+    for (Item& item : inventory) {
+        std::cout << "- " << item << "\n";
+    }
+
+    std::cout << "\nCurrent weight carried: " << current_weight << " lbs\n";
+}
+
+// examines the current environment
+void Game::look(std::vector<std::string>) {
+    std::cout << "Current Location: " << *current_location;
+}
+
+// shows current objective
+void Game::quest(std::vector<std::string>) {
+    std::cout << "Objective: Feed Eryndor enough calories to restore his strength\n";
 }
 
 // quits the game

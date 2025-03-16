@@ -32,16 +32,16 @@ private:
 
     void show_Help(std::vector<std::string> args);
     void guide(std::vector<std::string> args);
+    void show_items(std::vector<std::string> args);
+    void quest(std::vector<std::string> args);
+    void look(std::vector<std::string> args);
+    void quit(std::vector<std::string> args);
     void meet(std::vector<std::string> target);
     void go(std::vector<std::string> target);
-    void show_items(std::vector<std::string> args);
     void take(std::vector<std::string> target);
     void give(std::vector<std::string> target);
     void talk(std::vector<std::string> target);
-    void quest(std::vector<std::string> args);
-    void look(std::vector<std::string> args);
     void teleport(std::vector<std::string> target);
-    void quit(std::vector<std::string> args);
 
 public:
     Game();
