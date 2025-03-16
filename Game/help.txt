@@ -1,11 +1,4 @@
-# mini-ZORK
-A simplified C++ adaptation of the classic ZORK game made by Kenan Velagic
-
-mini-ZORK is a text-based adventure game set in the mysterious and crumbling world of Nytheris. Inspired by the classic ZORK, this game allows players to explore, interact, and uncover the lore of a once-balanced realm plunged into chaos. A key feature is the addition of a teleportation mechanic, enabling players to instantly travel between locations, making exploration faster and more strategic while maintaining the immersive storytelling experience.
-
-How to play:
-____
-These are the commands you can use. The goal of the game is to feed the elf in The Woods to save the land of Nytheris. The first command you're going to want to use is look to examine your surroundings.
+These are the commands you can use. Explore, interact, and achieve your objectives!
 
 - ?: Displays a list of all available commands to guide you through the game. Use it if you need a quick refresher. Example: ?
 
